@@ -1,15 +1,21 @@
 import { TaskCardList, useTasks, type Filter } from 'features/task-list';
+import { memo, useCallback, useMemo } from 'react';
 import { Button } from 'shared/ui/Button';
 import styles from './TaskList.module.css';
 
 export function TaskList() {
   const { tasks, filter, setFilter, removeTask } = useTasks();
 
-  const filters: { value: Filter; label: string }[] = [
-    { value: 'all', label: 'Все' },
-    { value: 'completed', label: 'Завершенные' },
-    { value: 'incomplete', label: 'Незавершенные' },
-  ];
+  const filters = useMemo(
+    () => [
+      { value: 'all' as Filter, label: 'Все' },
+      { value: 'completed' as Filter, label: 'Завершенные' },
+      { value: 'incomplete' as Filter, label: 'Незавершенные' },
+    ],
+    []
+  );
+
+  const handleFilterClick = useCallback((value: Filter) => () => setFilter(value), [setFilter]);
 
   return (
     <div className={styles.container}>
@@ -18,7 +24,8 @@ export function TaskList() {
           <Button
             key={f.value}
             active={filter === f.value}
-            onClick={() => setFilter(f.value)}
+            onClick={handleFilterClick(f.value)}
+            disabled={false}
           >
             {f.label}
           </Button>
@@ -28,3 +35,5 @@ export function TaskList() {
     </div>
   );
 }
+
+export const TaskListMemo = memo(TaskList);

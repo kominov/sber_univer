@@ -1,20 +1,25 @@
 import styles from './Button.module.css';
+import { memo } from 'react';
 
 interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'danger';
   active?: boolean;
+  disabled?: boolean;
   onClick: () => void;
   children: React.ReactNode;
 }
 
-export function Button({ variant = 'primary', active, onClick, children }: ButtonProps) {
+const ButtonComponent = ({ variant = 'primary', active, disabled = false, onClick, children }: ButtonProps) => {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${active ? styles.active : ''}`}
+      type="button"
+      className={`${styles.button} ${styles[variant]} ${active ? styles.active : ''} ${disabled ? styles.disabled : ''}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
   );
-}
+};
 
+export const Button = memo(ButtonComponent);

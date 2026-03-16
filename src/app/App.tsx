@@ -1,5 +1,5 @@
-import { TaskPage } from 'pages/tasks';
+import { RefExamplesPage } from 'pages/refExamples';
 
 export function App() {
-  return <TaskPage />;
+  return <RefExamplesPage />; 
 }

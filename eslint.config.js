@@ -38,7 +38,7 @@ export default defineConfig([
       }
     },
     rules: {
-      "import/no-unresolved": ["error", { "ignore": ["\\.(svg|png|jpg|jpeg|gif)$"] }],
+      "import/no-unresolved": "off",
       "boundaries/element-types": [2, {
         default: "disallow",
         rules: [

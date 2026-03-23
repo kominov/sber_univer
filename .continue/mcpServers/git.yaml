@@ -1,0 +1,11 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: Git
+    command: npx
+    args:
+      - "@cyanheads/git-mcp-server@latest"
+      - "repo"
+      - "."
+    env: {}

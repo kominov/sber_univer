@@ -1,15 +1,15 @@
 import {
-	Alert,
-	AlertTitle,
-	Box,
-	Button,
-	CircularProgress,
-	Container,
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
 } from '@mui/material';
-import { FC, ComponentType } from 'react';
+import type { SerializedError } from '@reduxjs/toolkit';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import type { ComponentType, FC } from 'react';
 import { getMessageFromError } from '../../utils';
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface WithQueryProps {
 	isLoading: boolean;

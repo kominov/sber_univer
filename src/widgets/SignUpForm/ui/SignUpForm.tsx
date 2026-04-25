@@ -1,24 +1,24 @@
-import { FC } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {
-	Avatar,
-	Box,
-	Container,
-	Link,
-	TextField,
-	Typography,
-} from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpFormValues } from '../utils/types';
-import { signUpFormSchema } from '../utils/validator';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import type { FC } from 'react';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useSignUpMutation } from '../../../shared/store/api/authApi';
 import { userActions } from '../../../shared/store/slices/user';
 import { getMessageFromError } from '../../../shared/utils';
-import { useSignUpMutation } from '../../../shared/store/api/authApi';
+import type { SignUpFormValues } from '../utils/types';
+import { signUpFormSchema } from '../utils/validator';
 
 export const SignUpForm: FC = () => {
 	const dispatch = useDispatch();
@@ -130,17 +130,16 @@ export const SignUpForm: FC = () => {
 						)}
 					/>
 
-					<LoadingButton
+					<Button
 						type='submit'
 						// кнопка становится недоступной после первой валидации (если есть ошибки)
 						// или когда выполняется отправка (чтобы не дать пользователю отправить форму несколько раз)
 						disabled={isSubmitted && (!isValid || isSubmitting)}
-						loading={isSubmitting}
 						fullWidth
 						variant='contained'
 						sx={{ mt: 3, mb: 2 }}>
 						Sign Up
-					</LoadingButton>
+					</Button>
 					<Box display='flex' justifyContent='center' flexGrow={1}>
 						<Link component={RouterLink} to='/signin'>
 							SIGN IN

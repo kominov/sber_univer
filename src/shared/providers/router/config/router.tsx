@@ -1,27 +1,29 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { HomePage } from '../../../../pages/HomePage';
-import { ProductPage } from '../../../../pages/ProductPage';
-import { NotFoundPage } from '../../../../pages/NotFoundPage';
-import { ProfilePage } from '../../../../pages/ProfilePage';
-import { FavoritesPage } from '../../../../pages/FavoritesPage';
 import { App } from '../../../../app';
-import { SignUpPage } from '../../../../pages/SignUpPage';
-import { SignInPage } from '../../../../pages/SignInPage';
 import { CartPage } from '../../../../pages/CartPage';
+import { FavoritesPage } from '../../../../pages/FavoritesPage';
+import { HomePage } from '../../../../pages/HomePage';
+import { NotFoundPage } from '../../../../pages/NotFoundPage';
+import { ProductPage } from '../../../../pages/ProductPage';
+import { ProfilePage } from '../../../../pages/ProfilePage';
+import { SignInPage } from '../../../../pages/SignInPage';
+import { SignUpPage } from '../../../../pages/SignUpPage';
 
-export enum AppRoutes {
-	HOME = 'home',
-	FAVORITES = 'favorites',
-	PRODUCTS = 'products',
-	PROFILE = 'profile',
-	CART = 'cart',
-	SIGNUP = 'signup',
-	SIGNIN = 'signin',
-	NOT_FOUND = 'not_found',
-}
+export const  AppRoutes = {
+	HOME :'home',
+	FAVORITES: 'favorites',
+	PRODUCTS: 'products',
+	PROFILE: 'profile',
+	CART: 'cart',
+	SIGNUP: 'signup',
+	SIGNIN: 'signin',
+	NOT_FOUND: 'not_found',
+} as const;
 
-export const RoutePath: Record<AppRoutes, `/${string}` | '*'> = {
+export type AppRoutesKey = typeof AppRoutes[keyof typeof AppRoutes];
+
+export const RoutePath: Record<AppRoutesKey, `/${string}` | '*'> = {
 	[AppRoutes.HOME]: '/',
 	[AppRoutes.FAVORITES]: '/favorites',
 	[AppRoutes.PRODUCTS]: '/products/:productId',
@@ -34,7 +36,7 @@ export const RoutePath: Record<AppRoutes, `/${string}` | '*'> = {
 
 export const router = createBrowserRouter([
 	{
-		path: RoutePath.home,
+		path: RoutePath[AppRoutes.HOME],
 		element: <App />,
 		children: [
 			{
@@ -42,35 +44,36 @@ export const router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: RoutePath.favorites,
+				path: RoutePath[AppRoutes.FAVORITES],
 				element: <FavoritesPage />,
 			},
 			{
-				path: RoutePath.products,
+				path: RoutePath[AppRoutes.PRODUCTS],
 				element: <ProductPage />,
 			},
 			{
-				path: RoutePath.profile,
+				path: RoutePath[AppRoutes.PROFILE],
 				element: <ProfilePage />,
 			},
 			{
-				path: RoutePath.cart,
+				path: RoutePath[AppRoutes.CART],
 				element: <CartPage />,
 			},
 			{
-				path: RoutePath.signup,
+				path: RoutePath[AppRoutes.SIGNUP],
 				element: <SignUpPage />,
 			},
 			{
-				path: RoutePath.signin,
+				path: RoutePath[AppRoutes.SIGNIN],
 				element: <SignInPage />,
 			},
 
 			// last route
 			{
-				path: RoutePath.not_found,
+				path: RoutePath[AppRoutes.NOT_FOUND],
 				element: <NotFoundPage />,
 			},
 		],
 	},
 ]);
+

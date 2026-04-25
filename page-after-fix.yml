@@ -1,0 +1,97 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Логотип компании" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Логотип компании" [ref=e6]
+      - textbox "Поиск" [ref=e8]
+      - generic [ref=e9]:
+        - link "0" [ref=e10] [cursor=pointer]:
+          - /url: /favorites
+          - img [ref=e11]
+          - generic [ref=e13]: "0"
+        - link "0" [ref=e14] [cursor=pointer]:
+          - /url: /cart
+          - img [ref=e15]
+          - generic [ref=e17]: "0"
+  - combobox [ref=e18]:
+    - option "Дешевые"
+    - option "Дорогие"
+    - option "Новые" [selected]
+    - option "Старые"
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - img [ref=e22]
+      - heading "Sign In" [level=1] [ref=e24]
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic:
+            - text: Email Address
+            - generic: "*"
+          - generic [ref=e27]:
+            - textbox "Email Address" [ref=e28]
+            - group:
+              - generic: Email Address *
+        - generic [ref=e29]:
+          - generic:
+            - text: Password
+            - generic: "*"
+          - generic [ref=e30]:
+            - textbox "Password" [ref=e31]
+            - group:
+              - generic: Password *
+        - button "Sign IN" [ref=e32] [cursor=pointer]
+        - link "SIGN UP" [ref=e34] [cursor=pointer]:
+          - /url: /signup
+  - contentinfo [ref=e35]:
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - link "Логотип компании" [ref=e39] [cursor=pointer]:
+          - /url: /
+          - img "Логотип компании" [ref=e40]
+        - paragraph [ref=e41]: © «Интернет-магазин DogFood.ru»
+      - navigation [ref=e43]:
+        - link "Каталог" [ref=e44] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Акции" [ref=e45] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Новости" [ref=e46] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Отзывы" [ref=e47] [cursor=pointer]:
+          - /url: /catalogue
+      - navigation [ref=e49]:
+        - link "Оплата и доставка" [ref=e50] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Часто спрашивают" [ref=e51] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Обратная связь" [ref=e52] [cursor=pointer]:
+          - /url: /catalogue
+        - link "Контакты" [ref=e53] [cursor=pointer]:
+          - /url: /catalogue
+      - generic [ref=e55]:
+        - paragraph [ref=e56]: Мы на связи
+        - link "8 (999) 00-00-00" [ref=e57] [cursor=pointer]:
+          - /url: tel:89177172179
+        - link "dogfood.ru@gmail.com" [ref=e58] [cursor=pointer]:
+          - /url: mailto:hordog.ru@gmail.com
+        - list [ref=e59]:
+          - listitem [ref=e60]:
+            - link "telegram" [ref=e61] [cursor=pointer]:
+              - /url: /#
+              - img "telegram" [ref=e62]
+          - listitem [ref=e63]:
+            - link "whatsapp" [ref=e64] [cursor=pointer]:
+              - /url: /#
+              - img "whatsapp" [ref=e65]
+          - listitem [ref=e66]:
+            - link "viber" [ref=e67] [cursor=pointer]:
+              - /url: /#
+              - img "viber" [ref=e68]
+          - listitem [ref=e69]:
+            - link "instagram" [ref=e70] [cursor=pointer]:
+              - /url: /#
+              - img "instagram" [ref=e71]
+          - listitem [ref=e72]:
+            - link "vk" [ref=e73] [cursor=pointer]:
+              - /url: /#
+              - img "vk" [ref=e74]

@@ -1,25 +1,25 @@
-import { FC } from 'react';
-import {
-	Avatar,
-	Box,
-	Container,
-	Link,
-	TextField,
-	Typography,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { toast } from 'react-toastify';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import type { FC } from 'react';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
-import { SignInFormValues } from '../utils/types';
-import { signInFormSchema } from '../utils/validator';
 import { useSignInMutation } from '../../../shared/store/api/authApi';
 import { userActions } from '../../../shared/store/slices/user';
 import { getMessageFromError } from '../../../shared/utils';
+import type { SignInFormValues } from '../utils/types';
+import { signInFormSchema } from '../utils/validator';
 
 export const SignInForm: FC = () => {
 	const dispatch = useDispatch();
@@ -136,17 +136,16 @@ export const SignInForm: FC = () => {
 						)}
 					/>
 
-					<LoadingButton
+					<Button
 						type='submit'
 						// кнопка становится недоступной после первой валидации (если есть ошибки)
 						// или когда выполняется отправка (чтобы не дать пользователю отправить форму несколько раз)
 						disabled={isSubmitted && (!isValid || isSubmitting)}
-						loading={isSubmitting}
 						fullWidth
 						variant='contained'
 						sx={{ mt: 3, mb: 2 }}>
 						Sign IN
-					</LoadingButton>
+					</Button>
 					<Box display='flex' justifyContent='center' flexGrow={1}>
 						<Link component={RouterLink} to='/signup'>
 							SIGN UP

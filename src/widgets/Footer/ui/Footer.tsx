@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import Instagram from '../../../shared/assets/images/instagram.svg';
-import Telegram from '../../../shared/assets/images/telegram.svg';
-import Viber from '../../../shared/assets/images/viber.svg';
-import Vk from '../../../shared/assets/images/vk.svg';
-import Whatsapp from '../../../shared/assets/images/whatsapp.svg';
-import s from './Footer.module.css';
+import Instagram from '../../../shared/assets/images/instagram.svg?url';
+import Telegram from '../../../shared/assets/images/telegram.svg?url';
+import Viber from '../../../shared/assets/images/viber.svg?url';
+import Vk from '../../../shared/assets/images/vk.svg?url';
+import Whatsapp from '../../../shared/assets/images/whatsapp.svg?url';
 import { Logo } from '../../../shared/ui/Logo';
+import s from './Footer.module.css';
 
 export const Footer = () => {
 	return (

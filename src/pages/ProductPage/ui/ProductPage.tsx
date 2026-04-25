@@ -1,18 +1,18 @@
-import s from './ProductPage.module.css';
-import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import truckSVG from '../../../shared/assets/icons/truck.svg';
-import qualitySVG from '../../../shared/assets/icons/quality.svg';
-import { Rating } from '../../../shared/ui/Rating';
-import { ButtonBack } from '../../../shared/ui/ButtonBack';
-import { LikeButton } from '../../../shared/ui/LikeButton';
-import { ReviewList } from '../../../widgets/ReviewList/ui/ReviewList';
+import { useLocation } from 'react-router-dom';
+import qualitySVG from '../../../shared/assets/icons/quality.svg?url';
+import truckSVG from '../../../shared/assets/icons/truck.svg?url';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { useGetProductQuery } from '../../../shared/store/api/productsApi';
-import { ProductCartCounter } from '../../../shared/ui/ProductCartCounter/ui/ProductCartCounter';
-import { useAppSelector } from '../../../shared/store/utils';
 import { cartSelectors } from '../../../shared/store/slices/cart';
+import { useAppSelector } from '../../../shared/store/utils';
+import { ButtonBack } from '../../../shared/ui/ButtonBack';
 import { CartCounter } from '../../../shared/ui/CartCounter';
+import { LikeButton } from '../../../shared/ui/LikeButton';
+import { ProductCartCounter } from '../../../shared/ui/ProductCartCounter/ui/ProductCartCounter';
+import { Rating } from '../../../shared/ui/Rating';
+import { ReviewList } from '../../../widgets/ReviewList/ui/ReviewList';
+import s from './ProductPage.module.css';
 
 export const ProductPage = WithProtection(() => {
 	const location = useLocation();

@@ -5,12 +5,12 @@ import { productsApi } from './api/productsApi';
 import { rootReducer } from './reducers/rootReducer';
 
 export const store = configureStore({
-	reducer: rootReducer,
-	devTools: import.meta.env.DEV,
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			thunk: {
-				extraArgument: AppApi,
-			},
-		}).concat([authApi.middleware, productsApi.middleware]),
+  reducer: rootReducer,
+  devTools: import.meta.env.DEV,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: AppApi,
+      },
+    }).concat([authApi.middleware, productsApi.middleware]),
 });

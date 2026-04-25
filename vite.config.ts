@@ -3,7 +3,9 @@ import { defineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import svgr from 'vite-plugin-svgr';
 
-export default defineConfig(() => {
+export default defineConfig(({mode}) => {
+  console.log(mode,'mode');
+  
 	return {
 		plugins: [
 			svgr(),
@@ -18,5 +20,9 @@ export default defineConfig(() => {
 		resolve: {
 			tsconfigPaths: true,
 		},
+     build:{
+      sourcemap: mode==='development'
+  }
 	};
+ 
 });

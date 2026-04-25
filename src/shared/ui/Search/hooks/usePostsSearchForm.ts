@@ -11,31 +11,31 @@ export interface UseProductsSearchFormParams {
 }
 
 export const useProductsSearchForm = () => {
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-	const [searchParams, setSearchParams] = useSearchParams();
-	const [searchValue, setSearchValue] = useState(
-		() => searchParams.get(QUERY_SEARCH_PHRASE) ?? ''
-	);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(
+    () => searchParams.get(QUERY_SEARCH_PHRASE) ?? ''
+  );
 
-	const optimizedValue = useDebounce(searchValue, 500);
+  const optimizedValue = useDebounce(searchValue, 500);
 
-	useEffect(() => {
-		dispatch(productsActions.setSearchText(optimizedValue));
-	}, [optimizedValue, dispatch]);
+  useEffect(() => {
+    dispatch(productsActions.setSearchText(optimizedValue));
+  }, [optimizedValue, dispatch]);
 
-	useEffect(() => {
-		if (searchValue) {
-			searchParams.set(QUERY_SEARCH_PHRASE, searchValue);
-		} else {
-			searchParams.delete(QUERY_SEARCH_PHRASE);
-		}
+  useEffect(() => {
+    if (searchValue) {
+      searchParams.set(QUERY_SEARCH_PHRASE, searchValue);
+    } else {
+      searchParams.delete(QUERY_SEARCH_PHRASE);
+    }
 
-		setSearchParams(searchParams);
-	}, [searchParams, searchValue, setSearchParams]);
+    setSearchParams(searchParams);
+  }, [searchParams, searchValue, setSearchParams]);
 
-	return {
-		searchValue,
-		setSearchValue,
-	};
+  return {
+    searchValue,
+    setSearchValue,
+  };
 };

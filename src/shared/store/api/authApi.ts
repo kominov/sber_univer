@@ -13,24 +13,24 @@ type SignInResponse = {
 };
 
 export const authApi = createApi({
-	reducerPath: 'authApi',
-	baseQuery: customBaseQuery,
-	endpoints: (builder) => ({
-		signUp: builder.mutation<SignUpResponse, SignUpFormValues>({
-			query: (signUpFormValues) => ({
-				url: '/auth/register',
-				method: 'POST',
-				body: signUpFormValues,
-			}),
-		}),
-		signIn: builder.mutation<SignInResponse, SignUpFormValues>({
-			query: (signInFormValues) => ({
-				url: '/auth/login',
-				method: 'POST',
-				body: signInFormValues,
-			}),
-		}),
-	}),
+  reducerPath: 'authApi',
+  baseQuery: customBaseQuery,
+  endpoints: (builder) => ({
+    signUp: builder.mutation<SignUpResponse, SignUpFormValues>({
+      query: (signUpFormValues) => ({
+        url: '/auth/register',
+        method: 'POST',
+        body: signUpFormValues,
+      }),
+    }),
+    signIn: builder.mutation<SignInResponse, SignUpFormValues>({
+      query: (signInFormValues) => ({
+        url: '/auth/login',
+        method: 'POST',
+        body: signInFormValues,
+      }),
+    }),
+  }),
 });
 
 export const { useSignInMutation, useSignUpMutation } = authApi;

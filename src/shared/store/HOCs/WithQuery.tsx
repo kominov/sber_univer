@@ -19,41 +19,41 @@ interface WithQueryProps {
 }
 
 export const WithQuery = <T extends object>(
-	WrappedComponent: ComponentType<T>
+  WrappedComponent: ComponentType<T>
 ) => {
-	const ReturnedComponent: FC<WithQueryProps & T> = (props) => {
-		const { isError, isLoading, refetch, error, ...propsForWrappedComponent } =
-			props;
+  const ReturnedComponent: FC<WithQueryProps & T> = (props) => {
+    const { isError, isLoading, refetch, error, ...propsForWrappedComponent }
+			= props;
 
-		if (isError) {
-			return (
-				<Container>
-					<Alert
-						action={<Button onClick={refetch}>Retry</Button>}
-						severity='error'>
-						<AlertTitle>
-							{getMessageFromError(
-								error,
-								'Неизвестная ошибка при получение данных'
-							)}
-						</AlertTitle>
-					</Alert>
-				</Container>
-			);
-		}
+    if (isError) {
+      return (
+        <Container>
+          <Alert
+            action={<Button onClick={refetch}>Retry</Button>}
+            severity='error'>
+            <AlertTitle>
+              {getMessageFromError(
+                error,
+                'Неизвестная ошибка при получение данных'
+              )}
+            </AlertTitle>
+          </Alert>
+        </Container>
+      );
+    }
 
-		if (isLoading) {
-			return (
-				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-					<CircularProgress />
-				</Box>
-			);
-		}
+    if (isLoading) {
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
 
-		return <WrappedComponent {...(propsForWrappedComponent as T)} />;
-	};
+    return <WrappedComponent {...(propsForWrappedComponent as T)} />;
+  };
 
-	ReturnedComponent.displayName = `withQuery${WrappedComponent.displayName}`;
+  ReturnedComponent.displayName = `withQuery${WrappedComponent.displayName}`;
 
-	return ReturnedComponent;
+  return ReturnedComponent;
 };

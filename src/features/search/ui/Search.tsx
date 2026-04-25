@@ -1,5 +1,6 @@
+import { Input } from '../../../shared/ui/Input';
+import { useProductsSearchForm } from '../hooks/useProductsSearchForm';
 import s from './Search.module.css';
-import { useProductsSearchForm } from '../hooks/usePostsSearchForm';
 
 export const Search = () => {
   const { searchValue, setSearchValue } = useProductsSearchForm();
@@ -10,8 +11,7 @@ export const Search = () => {
 
   return (
     <form className={s['search']}>
-      <input
-        type='text'
+      <Input
         className={s['search__input']}
         placeholder='Поиск'
         value={searchValue}

@@ -1,0 +1,20 @@
+.form {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	padding: 0 20px;
+}
+
+.form__row {
+	display: contents;
+}
+
+.form__label {
+	display: flex;
+	flex-direction: column;
+}
+
+.maxContent {
+	grid-column: 1 / -1;
+	width: max-content;
+}

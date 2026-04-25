@@ -13,7 +13,7 @@
 }
 
 .input:focus {
-	border-color: #ff7020;
+	border-color: #fffb20;
 	box-shadow: 0 0 0 3px rgb(255 112 32 / 18%);
 }
 

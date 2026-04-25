@@ -1,11 +1,11 @@
 import classNames from 'classnames';
+import { CartCounter } from 'features/cartCounter';
+import { LikeButton } from 'features/likeButton';
 import { Link } from 'react-router-dom';
-import { useAddToCart } from '../../../../shared/hooks/useAddToCart';
-import { cartSelectors } from '../../../../shared/store/slices/cart';
-import { useAppSelector } from '../../../../shared/store/utils';
-import { CartCounter } from '../../../../shared/ui/CartCounter';
-import { LikeButton } from '../../../../shared/ui/LikeButton';
-import { Price } from '../../../../shared/ui/Price';
+import { useAddToCart } from 'shared/hooks/useAddToCart';
+import { cartSelectors } from 'shared/store/slices/cart';
+import { useAppSelector } from 'shared/store/utils';
+import { Price } from 'shared/ui/Price';
 import s from './Card.module.css';
 
 type CardProps = {

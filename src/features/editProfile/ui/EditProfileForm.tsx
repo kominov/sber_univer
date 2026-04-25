@@ -1,5 +1,5 @@
-import { Input } from '../../../shared/ui/Input';
-import { Button } from '../../../shared/ui/Button';
+import { Button } from 'shared/ui/Button';
+import { Input } from 'shared/ui/Input';
 import s from './EditProfileForm.module.css';
 
 export const EditProfileForm = () => {

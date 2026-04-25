@@ -1,4 +1,4 @@
-import { Input } from '../../../shared/ui/Input';
+import { Input } from 'shared/ui/Input';
 import { useProductsSearchForm } from '../hooks/useProductsSearchForm';
 import s from './Search.module.css';
 

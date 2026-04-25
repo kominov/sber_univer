@@ -1,12 +1,12 @@
 import classNames from 'classnames';
+import { Search } from 'features/search';
 import { Link } from 'react-router-dom';
-import { Search } from '../../../features/search';
-import { useProducts } from '../../../shared/store/hooks/useProducts';
-import { cartSelectors } from '../../../shared/store/slices/cart';
-import { userSelectors } from '../../../shared/store/slices/user';
-import { useAppSelector } from '../../../shared/store/utils';
-import { Logo } from '../../../shared/ui/Logo';
-import { isLiked } from '../../../shared/utils';
+import { useProducts } from 'shared/store/hooks/useProducts';
+import { cartSelectors } from 'shared/store/slices/cart';
+import { userSelectors } from 'shared/store/slices/user';
+import { useAppSelector } from 'shared/store/utils';
+import { Logo } from 'shared/ui/Logo';
+import { isLiked } from 'shared/utils';
 import s from './Header.module.css';
 
 export const Header = () => {

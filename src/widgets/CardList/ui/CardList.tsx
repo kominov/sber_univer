@@ -1,4 +1,4 @@
-import { Card } from '../../../entities/Product';
+import { Card } from 'entities/Product';
 import s from './CardList.module.css';
 
 type CardListProps = {

@@ -1,14 +1,13 @@
-import { WithProtection } from 'features/auth';
-import { useLocation } from 'react-router-dom';
-
+import { WithProtection } from 'app/router';
+import { CartCounter } from 'features/cartCounter';
+import { LikeButton } from 'features/likeButton';
 import { ProductCartCounter } from 'features/productCart';
+import { useLocation } from 'react-router-dom';
 import { useGetProductQuery } from 'shared/store/api/productsApi';
 import { cartSelectors } from 'shared/store/slices/cart';
 import { useAppSelector } from 'shared/store/utils';
 import { ButtonBack } from 'shared/ui/ButtonBack';
-import { CartCounter } from 'shared/ui/CartCounter';
 import { DeliveryInfo } from 'shared/ui/DeliveryInfo';
-import { LikeButton } from 'shared/ui/LikeButton';
 import { Price } from 'shared/ui/Price';
 import { ProductSpecs } from 'shared/ui/ProductSpecs';
 import { Rating } from 'shared/ui/Rating';

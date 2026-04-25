@@ -1,9 +1,9 @@
-import { WithProtection } from 'features/auth';
+import { WithProtection } from 'app/router';
+import { LoadMore } from 'features/loadMore';
 import { Sort } from 'features/sort';
+import { WithQuery } from 'shared/store/HOCs/WithQuery';
+import { useProducts } from 'shared/store/hooks/useProducts';
 import { CardList } from 'widgets/CardList';
-import { WithQuery } from '../../../shared/store/HOCs/WithQuery';
-import { useProducts } from '../../../shared/store/hooks/useProducts';
-import { LoadMore } from '../../../shared/ui/LoadMore';
 
 const CardListWithQuery = WithQuery(CardList);
 

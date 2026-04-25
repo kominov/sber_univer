@@ -11,7 +11,7 @@ export const App = () => {
   return (
     <>
       <Header />
-      <Container sx={{ flexGrow: 1 }} component='main'>
+      <Container sx={{ flexGrow: 1, pb: 4,pt:4 }} component='main'>
         <Outlet />
       </Container>
       <ToastContainer

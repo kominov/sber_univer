@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import { WithProtection } from 'features/auth';
-import { EditProfileForm } from '../../../features/editProfile';
-import { Button } from '../../../shared/ui/Button';
-import { ButtonBack } from '../../../shared/ui/ButtonBack';
-import { Input } from '../../../shared/ui/Input';
+
+import { WithProtection } from 'app/router';
+import { EditProfileForm } from 'features/editProfile';
+import { Button } from 'shared/ui/Button';
+import { ButtonBack } from 'shared/ui/ButtonBack';
+import { Input } from 'shared/ui/Input';
 import s from './ProfilePage.module.css';
 
 export const ProfilePage = WithProtection(() => {

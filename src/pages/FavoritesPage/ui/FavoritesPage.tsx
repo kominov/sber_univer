@@ -1,4 +1,4 @@
-import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
+import { WithProtection } from 'features/auth';
 import { WithQuery } from '../../../shared/store/HOCs/WithQuery';
 import { useProducts } from '../../../shared/store/hooks/useProducts';
 import { ButtonBack } from '../../../shared/ui/ButtonBack';

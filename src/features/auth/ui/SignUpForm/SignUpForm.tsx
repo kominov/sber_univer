@@ -9,66 +9,47 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { signUpFormSchema } from 'features/auth';
+import type { SignUpFormValues } from 'features/auth/model/types';
 import type { FC } from 'react';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSignUpMutation } from '../../../shared/store/api/authApi';
-import { userActions } from '../../../shared/store/slices/user';
-import { getMessageFromError } from '../../../shared/utils';
-import type { SignUpFormValues } from '../utils/types';
-import { signUpFormSchema } from '../utils/validator';
+import { useSignUpMutation } from 'shared/store/api/authApi';
+import { userActions } from 'shared/store/slices/user';
+import { getMessageFromError } from 'shared/utils';
+
 
 export const SignUpForm: FC = () => {
   const dispatch = useDispatch();
-  // navigate поможет сделать редирект в нужный момент
   const navigate = useNavigate();
-  // Из хука useSignUpMutation (был получен путем автогенерации)
-  // достаем функцию, которая будет (регистрировать пользователя) делать POST-запрос к нашем серверу)
   const [signUpRequestFn] = useSignUpMutation();
-  // инициализируем react-hook-form
+
   const {
-    // control понадобиться, чтобы подружить react-hook-form и компоненты из MUI
     control,
     handleSubmit,
     formState: { errors, isValid, isSubmitting, isSubmitted },
-    // с помощью generic подсказываем react-hook-form, какие поля содержит наша форма
   } = useForm<SignUpFormValues>({
     defaultValues: {
       email: '',
       password: '',
     },
-    // react-hook-form умеет работать со многими библиотеками
-    // валидации, мы используем yup
     resolver: yupResolver(signUpFormSchema),
   });
 
   const submitHandler: SubmitHandler<SignUpFormValues> = async (values) => {
     try {
-      // метод "unwrap" помогает убрать вспомогательные обертки
-      // RTK, которые обрабатывают ошибки. Теперь ошибки обрабатываем мы
-      // с помощью конструкции try...catch. В этом случае нам так удобней
       const response = await signUpRequestFn(values).unwrap();
 
       dispatch(userActions.setUser(response.user));
-      dispatch(
-        userActions.setAccessToken({ accessToken: response.accessToken })
-      );
+      dispatch(userActions.setAccessToken({ accessToken: response.accessToken }));
 
-      // Выводим уведомление, что пользователь успешно зарегался
-      // Есть куча библиотек для отображения "Тостеров". Мы используем
-      // react-toastify — https://github.com/fkhadra/react-toastify#readme
       toast.success('Вы успешно зарегистрированы!');
       navigate('/');
     } catch (error) {
-      // Если произошла ошибка, то выводим уведомление
       console.log({ error });
-      toast.error(
-        getMessageFromError(
-          error,
-          'Не известная ошибка при регистрации пользователя'
-        )
+      toast.error(getMessageFromError(error,'Не известная ошибка при регистрации пользователя')
       );
     }
   };

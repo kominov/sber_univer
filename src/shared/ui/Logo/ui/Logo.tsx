@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import LogoIcon from '../assets/logo.svg?url';
+import LogoIcon from 'shared/ui/Logo/assets/logo.svg?react';
 import s from './Logo.module.css';
 
 export const Logo = () => {
   return (
-    <Link to='/'>
-      <img className={s['logo__pic']} src={LogoIcon} alt='Логотип компании' />
+    <Link to='/' aria-label='Логотип компании'>
+      <LogoIcon className={s['logo__pic']} />
     </Link>
   );
 };

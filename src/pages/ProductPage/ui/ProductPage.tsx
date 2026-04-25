@@ -1,8 +1,8 @@
 import classNames from 'classnames';
+import { WithProtection } from 'features/auth';
 import { useLocation } from 'react-router-dom';
 import qualitySVG from '../../../shared/assets/icons/quality.svg?url';
 import truckSVG from '../../../shared/assets/icons/truck.svg?url';
-import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { useGetProductQuery } from '../../../shared/store/api/productsApi';
 import { cartSelectors } from '../../../shared/store/slices/cart';
 import { useAppSelector } from '../../../shared/store/utils';

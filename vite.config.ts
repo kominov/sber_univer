@@ -6,23 +6,23 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig(({mode}) => {
   console.log(mode,'mode');
   
-	return {
-		plugins: [
-			svgr(),
-			react(),
-			checker({
-				typescript: {
-					tsconfigPath: './tsconfig.json',
-				},
-				overlay: { initialIsOpen: true },
-			}),
-		],
-		resolve: {
-			tsconfigPaths: true,
-		},
-     build:{
-      sourcemap: mode==='development'
-  }
-	};
+  return {
+    plugins: [
+      svgr(),
+      react(),
+      checker({
+        typescript: {
+          tsconfigPath: './tsconfig.json',
+        },
+        overlay: { initialIsOpen: true },
+      }),
+    ],
+    resolve: {
+      tsconfigPaths: true,
+    },
+    build:{
+      sourcemap: mode === 'development'
+    }
+  };
  
 });

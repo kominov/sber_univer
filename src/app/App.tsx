@@ -1,5 +1,5 @@
-import { PotralEx } from 'pages/portals';
+import { PortalShowcase } from 'pages/portals-showcase';
 
 export function App() {
-  return <PotralEx />; 
+  return <PortalShowcase />; 
 }

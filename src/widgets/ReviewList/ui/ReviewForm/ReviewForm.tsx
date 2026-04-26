@@ -1,36 +1,61 @@
 import classNames from 'classnames';
-import { useState, type ChangeEvent } from 'react';
+import { memo, useActionState, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Button } from 'shared/ui/Button';
 import { Rating } from 'shared/ui/Rating';
 import s from './ReviewForm.module.css';
 
-export const ReviewForm = () => {
-  const [reviewText, setReviewText] = useState('');
+interface ReviewActionState {
+	status: 'idle' | 'success' | 'error'
+	error?: string
+}
+
+const initialState: ReviewActionState = { status: 'idle' };
+
+const submitReviewAction = async (_prev: ReviewActionState, formData: FormData): Promise<ReviewActionState> => {
+  const text = String(formData.get('text') ?? '').trim();
+  const rating = Number(formData.get('rating') ?? 0);
+
+  if (!rating) return { status: 'error', error: 'Поставьте оценку' };
+  if (!text) return { status: 'error', error: 'Введите текст отзыва' };
+
+  await new Promise((resolve) => setTimeout(resolve, 700));
+
+  console.info('[ReviewForm] отправлен отзыв', { text, rating });
+  return { status: 'success' };
+};
+
+export const ReviewForm = memo(() => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [rating, setRating] = useState(0);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setReviewText(e.target.value);
-  };
+  const [state, formAction, isPending] = useActionState(submitReviewAction, initialState);
 
-  const handleClick = () => {
-    console.log('Отправка: ', { reviewText, rating });
-  };
+  useEffect(() => {
+    if (state.status === 'success') {
+      toast.success('Отзыв отправлен');
+      formRef.current?.reset();
+      setRating(0);
+    } else if (state.status === 'error' && state.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
 
   return (
-    <form className={s['form']}>
+    <form ref={formRef} action={formAction} className={s['form']}>
+      <input type='hidden' name='rating' value={rating} />
       <Rating isEdit rating={rating} onChange={setRating} />
       <textarea
         className={classNames(s['input'], s['textarea'])}
         name='text'
         id='text'
         placeholder='Напишите текст отзыва'
-        value={reviewText}
-        onChange={handleChange}></textarea>
-      <button
-        type='submit'
-        className={classNames(s['form__btn'], s['pramary'])}
-        onClick={handleClick}>
-				Отправить отзыв
-      </button>
+      />
+      <Button type='submit' loading={isPending} disabled={isPending}>
+        {isPending ? 'Отправка…' : 'Отправить отзыв'}
+      </Button>
     </form>
   );
-};
+});
+
+ReviewForm.displayName = 'ReviewForm';

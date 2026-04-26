@@ -9,6 +9,9 @@ type CartAmountProps = {
 };
 export const CartAmount = memo(({ products }: CartAmountProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  
+  const openConfirm = useCallback(() => setIsConfirmOpen(true), []);
+  const closeConfirm = useCallback(() => setIsConfirmOpen(false), []);
 
   const allPrice = useMemo(
     () => products.reduce((acc, p) => p.price * p.count + acc, 0),
@@ -22,10 +25,9 @@ export const CartAmount = memo(({ products }: CartAmountProps) => {
   const handleSubmitCart = useCallback(() => {
     const order = products.map((p) => ({ id: p.id, count: p.count }));
     console.log('Отправка заказа на сервер: ', JSON.stringify(order, null, 2));
-  }, [products]);
+    closeConfirm();
+  }, [closeConfirm, products]);
 
-  const openConfirm = useCallback(() => setIsConfirmOpen(true), []);
-  const closeConfirm = useCallback(() => setIsConfirmOpen(false), []);
 
   return (
     <div className={classNames(s['cart-amount'])}>

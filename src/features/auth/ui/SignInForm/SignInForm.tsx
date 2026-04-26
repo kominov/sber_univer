@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import type { FC } from 'react';
+import { useEffect, useRef } from 'react';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -27,7 +28,12 @@ export const SignInForm: FC = () => {
   const navigate = useNavigate();
 
   const [signInRequestFn] = useSignInMutation();
-  
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    emailInputRef.current?.focus();
+  }, []);
+
   const {
     control,
     handleSubmit,
@@ -42,7 +48,6 @@ export const SignInForm: FC = () => {
 
   const submitHandler: SubmitHandler<SignInFormValues> = async (values) => {
     try {
-     
       const response = await signInRequestFn(values).unwrap();
 
       dispatch(userActions.setUser(response.user));
@@ -50,7 +55,6 @@ export const SignInForm: FC = () => {
         userActions.setAccessToken({ accessToken: response.accessToken })
       );
 
-     
       toast.success('Вы успешно авторизованы!');
 
       if (location.state?.from) {
@@ -93,6 +97,11 @@ export const SignInForm: FC = () => {
             control={control}
             render={({ field }) => (
               <TextField
+                {...field}
+                inputRef={(el) => {
+                  emailInputRef.current = el;
+                  field.ref(el);
+                }}
                 margin='normal'
                 label='Email Address'
                 type='email'
@@ -101,7 +110,6 @@ export const SignInForm: FC = () => {
                 autoComplete='email'
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
-                {...field}
               />
             )}
           />

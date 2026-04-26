@@ -12,6 +12,7 @@ import {
 import { signUpFormSchema } from 'features/auth';
 import type { SignUpFormValues } from 'features/auth/model/types';
 import type { FC } from 'react';
+import { useEffect, useRef } from 'react';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -20,11 +21,16 @@ import { useSignUpMutation } from 'shared/store/api/authApi';
 import { userActions } from 'shared/store/slices/user';
 import { getMessageFromError } from 'shared/utils';
 
-
 export const SignUpForm: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signUpRequestFn] = useSignUpMutation();
+
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    emailInputRef.current?.focus();
+  }, []);
 
   const {
     control,
@@ -74,14 +80,16 @@ export const SignUpForm: FC = () => {
           onSubmit={handleSubmit(submitHandler)}
           noValidate
           sx={{ mt: 1 }}>
-          {/* Чтобы подружить react-hook-form с MUI используем компонент Controller
-              смотри доку https://react-hook-form.com/get-started#IntegratingwithUIlibraries
-           */}
           <Controller
             name='email'
             control={control}
             render={({ field }) => (
               <TextField
+                {...field}
+                inputRef={(el) => {
+                  emailInputRef.current = el;
+                  field.ref(el);
+                }}
                 margin='normal'
                 label='Email Address'
                 type='email'
@@ -90,7 +98,6 @@ export const SignUpForm: FC = () => {
                 autoComplete='email'
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
-                {...field}
               />
             )}
           />
@@ -113,8 +120,6 @@ export const SignUpForm: FC = () => {
 
           <Button
             type='submit'
-            // кнопка становится недоступной после первой валидации (если есть ошибки)
-            // или когда выполняется отправка (чтобы не дать пользователю отправить форму несколько раз)
             disabled={isSubmitted && (!isValid || isSubmitting)}
             fullWidth
             variant='contained'

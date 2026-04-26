@@ -1,5 +1,5 @@
-import { TaskPage } from 'pages/tasks';
+import { PortalShowcase } from 'pages/portals-showcase';
 
 export function App() {
-  return <TaskPage />;
+  return <PortalShowcase />; 
 }

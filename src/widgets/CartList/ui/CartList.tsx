@@ -1,10 +1,11 @@
 import { CartItem } from 'features/cartItem';
+import { memo } from 'react';
 import s from './CartList.module.css';
 
 type CartListProps = {
 	products: CartProduct[];
 };
-export const CartList = ({ products }: CartListProps) => {
+export const CartList = memo(({ products }: CartListProps) => {
   return (
     <div className={s['cart-list']}>
       {products.map((p) => (
@@ -12,4 +13,6 @@ export const CartList = ({ products }: CartListProps) => {
       ))}
     </div>
   );
-};
+});
+
+CartList.displayName = 'CartList';

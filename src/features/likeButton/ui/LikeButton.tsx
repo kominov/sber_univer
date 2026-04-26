@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { memo, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import LikeSvg from 'shared/assets/icons/like.svg?react';
 import {
@@ -13,7 +14,7 @@ import s from './LikeButton.module.css';
 type TLikeButtonProps = {
 	product: Product;
 };
-export const LikeButton = ({ product }: TLikeButtonProps) => {
+export const LikeButton = memo(({ product }: TLikeButtonProps) => {
   const accessToken = useAppSelector(userSelectors.getAccessToken);
   const user = useAppSelector(userSelectors.getUser);
 
@@ -22,7 +23,7 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
 
   const isLike = product?.likes.some((l) => l.userId === user?.id);
 
-  const toggleLike = async () => {
+  const toggleLike = useCallback(async () => {
     if (!accessToken) {
       toast.warning('Вы не авторизованы');
       return;
@@ -38,7 +39,7 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
       const error = response.error as IErrorResponse;
       toast.error(error.data.message);
     }
-  };
+  }, [accessToken, deleteLike, isLike, product.id, setLike]);
 
   return (
     <button
@@ -49,4 +50,6 @@ export const LikeButton = ({ product }: TLikeButtonProps) => {
       <LikeSvg />
     </button>
   );
-};
+});
+
+LikeButton.displayName = 'LikeButton';

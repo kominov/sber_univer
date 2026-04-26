@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import truckSVG from '../../../assets/icons/truck.svg?url';
+import { memo } from 'react';
 import qualitySVG from '../../../assets/icons/quality.svg?url';
+import truckSVG from '../../../assets/icons/truck.svg?url';
 import s from './DeliveryInfo.module.css';
 
-export const DeliveryInfo = () => {
+export const DeliveryInfo = memo(() => {
   return (
     <>
       <div className={classNames(s['delivery'])}>
@@ -39,4 +40,6 @@ export const DeliveryInfo = () => {
       </div>
     </>
   );
-};
+});
+
+DeliveryInfo.displayName = 'DeliveryInfo';

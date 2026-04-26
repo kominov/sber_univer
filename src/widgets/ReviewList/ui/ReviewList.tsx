@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import { Rating } from 'shared/ui/Rating';
 import { ReviewForm } from './ReviewForm/ReviewForm';
 import s from './ReviewList.module.css';
@@ -6,7 +7,7 @@ import s from './ReviewList.module.css';
 type ReviewListProps = {
 	product: Product;
 };
-export const ReviewList = ({ product }: ReviewListProps) => {
+export const ReviewList = memo(({ product }: ReviewListProps) => {
   return (
     <div className={classNames(s['product__reviews'])}>
       {product.reviews.map((review) => (
@@ -26,4 +27,6 @@ export const ReviewList = ({ product }: ReviewListProps) => {
       <ReviewForm />
     </div>
   );
-};
+});
+
+ReviewList.displayName = 'ReviewList';

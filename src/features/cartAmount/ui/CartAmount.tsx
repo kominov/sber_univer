@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Button } from 'shared/ui/Button';
 import { Modal } from 'shared/ui/Modal';
 import s from './CartAmount.module.css';
@@ -7,22 +7,26 @@ import s from './CartAmount.module.css';
 type CartAmountProps = {
 	products: CartProduct[];
 };
-export const CartAmount = ({ products }: CartAmountProps) => {
-  	const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+export const CartAmount = memo(({ products }: CartAmountProps) => {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
-  const allDiscount = products.reduce(
-    (acc, p) => p.discount * p.count + acc,
-    0
+  const allPrice = useMemo(
+    () => products.reduce((acc, p) => p.price * p.count + acc, 0),
+    [products]
+  );
+  const allDiscount = useMemo(
+    () => products.reduce((acc, p) => p.discount * p.count + acc, 0),
+    [products]
   );
 
   const handleSubmitCart = useCallback(() => {
     const order = products.map((p) => ({ id: p.id, count: p.count }));
     console.log('Отправка заказа на сервер: ', JSON.stringify(order, null, 2));
-  },[products]);
+  }, [products]);
 
   const openConfirm = useCallback(() => setIsConfirmOpen(true), []);
   const closeConfirm = useCallback(() => setIsConfirmOpen(false), []);
+
   return (
     <div className={classNames(s['cart-amount'])}>
       <h1 className={classNames(s['cart-amount__title'])}>Ваша корзина</h1>
@@ -77,4 +81,6 @@ export const CartAmount = ({ products }: CartAmountProps) => {
       </Modal>
     </div>
   );
-};
+});
+
+CartAmount.displayName = 'CartAmount';

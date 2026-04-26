@@ -1,13 +1,19 @@
+import { memo, useCallback } from 'react';
 import { Input } from 'shared/ui/Input';
 import { useProductsSearchForm } from '../hooks/useProductsSearchForm';
 import s from './Search.module.css';
 
-export const Search = () => {
+export const Search = memo(() => {
   const { searchValue, setSearchValue } = useProductsSearchForm();
 
-  const handleClearSearchText = () => {
+  const handleClearSearchText = useCallback(() => {
     setSearchValue('');
-  };
+  }, [setSearchValue]);
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value),
+    [setSearchValue]
+  );
 
   return (
     <form className={s['search']}>
@@ -15,7 +21,7 @@ export const Search = () => {
         className={s['search__input']}
         placeholder='Поиск'
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={handleChange}
       />
       {searchValue.length > 0 && (
         <button className={s['search__btn']} onClick={handleClearSearchText}>
@@ -38,4 +44,6 @@ export const Search = () => {
       )}
     </form>
   );
-};
+});
+
+Search.displayName = 'Search';

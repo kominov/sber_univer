@@ -1,11 +1,12 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import { useCount } from '../hooks/useCount';
 import s from './CartCounter.module.css';
 
 type TCartCounter = {
 	productId: string;
 };
-export const CartCounter = ({ productId }: TCartCounter) => {
+export const CartCounter = memo(({ productId }: TCartCounter) => {
   const { count, stock, handleSetCount, handleIncrement, handleDecrement } = useCount(productId);
 
   return (
@@ -29,4 +30,6 @@ export const CartCounter = ({ productId }: TCartCounter) => {
       </button>
     </div>
   );
-};
+});
+
+CartCounter.displayName = 'CartCounter';

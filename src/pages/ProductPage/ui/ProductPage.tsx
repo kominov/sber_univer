@@ -1,11 +1,12 @@
 import { WithProtection } from 'app/router';
 import { CartCounter } from 'features/cartCounter';
 import { LikeButton } from 'features/likeButton';
-import { ProductCartCounter } from 'features/productCart';
 import { useLocation } from 'react-router-dom';
+import { useAddToCart } from 'shared/hooks/useAddToCart';
 import { useGetProductQuery } from 'shared/store/api/productsApi';
 import { cartSelectors } from 'shared/store/slices/cart';
 import { useAppSelector } from 'shared/store/utils';
+import { Button } from 'shared/ui/Button';
 import { ButtonBack } from 'shared/ui/ButtonBack';
 import { DeliveryInfo } from 'shared/ui/DeliveryInfo';
 import { Price } from 'shared/ui/Price';
@@ -18,6 +19,7 @@ export const ProductPage = WithProtection(() => {
   const location = useLocation();
   const { pathname } = location;
   const productId = pathname.split('/').at(-1) || '';
+  const { addProductToCart } = useAddToCart();
 
   const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
@@ -46,9 +48,10 @@ export const ProductPage = WithProtection(() => {
         <div className={s['product__desc']}>
           <Price price={price} discountPrice={discount} />
 
-          {isProductInCart             
-            ? <CartCounter productId={id} />
-            : <ProductCartCounter product={product} />
+          {
+            isProductInCart             
+              ? <CartCounter productId={id} />
+              : <Button onClick={()=> addProductToCart(({ ...product, count: 1 }))}>В корзину</Button>
           }
 
           <LikeButton product={product} />

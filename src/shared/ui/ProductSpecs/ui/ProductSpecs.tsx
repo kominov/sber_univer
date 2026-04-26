@@ -1,7 +1,8 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import s from './ProductSpecs.module.css';
 
-export const ProductSpecs = () => {
+export const ProductSpecs = memo(() => {
   return (
     <div className={classNames(s['box'])}>
       <h2 className={classNames(s['title'])}>Описание</h2>
@@ -36,4 +37,6 @@ export const ProductSpecs = () => {
       </div>
     </div>
   );
-};
+});
+
+ProductSpecs.displayName = 'ProductSpecs';

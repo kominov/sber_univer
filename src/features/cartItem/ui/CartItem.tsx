@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { CartCounter } from 'features/cartCounter';
+import { memo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TrashIcon from 'shared/assets/icons/trash.svg?react';
@@ -10,13 +11,14 @@ import s from './CartItem.module.css';
 type CartItemProps = {
 	product: CartProduct;
 };
-export const CartItem = ({ product }: CartItemProps) => {
+export const CartItem = memo(({ product }: CartItemProps) => {
   const dispatch = useDispatch();
   const { id, name, images, price, discount } = product;
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     dispatch(cartActions.deleteCartProduct(id));
-  };
+  }, [dispatch, id]);
+
   return (
     <div className={classNames(s['cart-item'])}>
       <div className={classNames(s['cart-item__desc'])}>
@@ -48,4 +50,6 @@ export const CartItem = ({ product }: CartItemProps) => {
       </div>
     </div>
   );
-};
+});
+
+CartItem.displayName = 'CartItem';

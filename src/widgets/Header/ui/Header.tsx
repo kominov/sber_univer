@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Search } from 'features/search';
+import { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from 'shared/store/hooks/useProducts';
 import { cartSelectors } from 'shared/store/slices/cart';
@@ -9,14 +10,16 @@ import { Logo } from 'shared/ui/Logo';
 import { isLiked } from 'shared/utils';
 import s from './Header.module.css';
 
-export const Header = () => {
+export const Header = memo(() => {
   const { products } = useProducts();
   const user = useAppSelector(userSelectors.getUser);
   const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
-  const likeCount = products.filter((product) =>
-    isLiked(product.likes, user?.id)
-  ).length;
+  const likeCount = useMemo(
+    () =>
+      products.filter((product) => isLiked(product.likes, user?.id)).length,
+    [products, user?.id]
+  );
 
   const accessToken = useAppSelector(userSelectors.getAccessToken);
 
@@ -80,4 +83,6 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import Instagram from 'shared/assets/images/instagram.svg?url';
 import Telegram from 'shared/assets/images/telegram.svg?url';
 import Viber from 'shared/assets/images/viber.svg?url';
@@ -7,7 +8,7 @@ import Whatsapp from 'shared/assets/images/whatsapp.svg?url';
 import { Logo } from 'shared/ui/Logo';
 import s from './Footer.module.css';
 
-export const Footer = () => {
+export const Footer = memo(() => {
   return (
     <footer className={s.footer}>
       <div className='container'>
@@ -96,4 +97,6 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';

@@ -1,88 +1,123 @@
-import classNames from 'classnames';
-import { useCallback, useEffect, useRef, type ReactNode } from 'react';
+import { memo, useCallback, useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import s from './Modal.module.css';
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: ReactNode;
+	isOpen: boolean
+	onClose: () => void
+	title?: string
+	children?: ReactNode
+	closeOnOverlayClick?: boolean
+	closeOnEsc?: boolean
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const triggerRef = useRef<Element | null>(null);
+const MODAL_ROOT_ID = 'modal-root';
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    },
-    [onClose],
-  );
+export const Modal = memo(
+  ({
+    isOpen,
+    onClose,
+    title,
+    children,
+    closeOnOverlayClick = true,
+    closeOnEsc = true,
+  }: ModalProps) => {
+    const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+    const triggerRef = useRef<Element | null>(null);
 
-  const handleOverlayClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        onClose();
-      }
-    },
-    [onClose],
-  );
+    useEffect(() => {
+      if (!isOpen) return;
 
-  useEffect(() => {
-    if (isOpen) {
-      // Save the currently focused element (trigger) before opening
       triggerRef.current = document.activeElement;
 
-      // Set focus to the close button
-      closeButtonRef.current?.focus();
+      const focusFrame = window.requestAnimationFrame(() => {
+        closeButtonRef.current?.focus();
+      });
 
-      // Add global keydown listener for Escape
-      document.addEventListener('keydown', handleKeyDown);
-
-      // Prevent body scroll when modal is open
+      const previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-    }
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      return () => {
+        window.cancelAnimationFrame(focusFrame);
+        document.body.style.overflow = previousOverflow;
 
-      // Return focus to the trigger element when modal closes
-      if (triggerRef.current && 'focus' in triggerRef.current) {
-        (triggerRef.current as HTMLElement).focus();
-      }
-    };
-  }, [isOpen, handleKeyDown, onClose]);
+        const trigger = triggerRef.current;
+        if (trigger instanceof HTMLElement) {
+          trigger.focus();
+        }
+      };
+    }, [isOpen]);
 
-  if (!isOpen) {
-    return null;
+    useEffect(() => {
+      if (!isOpen || !closeOnEsc) return;
+
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          onClose();
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isOpen, closeOnEsc, onClose]);
+
+    const handleOverlayMouseDown = useCallback(
+      (event: MouseEvent<HTMLDivElement>) => {
+        if (!closeOnOverlayClick) return;
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      },
+      [closeOnOverlayClick, onClose]
+    );
+
+    if (!isOpen) return null;
+
+    const modalRoot = document.getElementById(MODAL_ROOT_ID);
+    if (!modalRoot) return null;
+
+    return createPortal(
+      <div className={s.overlay} onMouseDown={handleOverlayMouseDown} role='presentation'>
+        <div
+          className={s.modal}
+          role='dialog'
+          aria-modal='true'
+          aria-labelledby={title ? 'modal-title' : undefined}>
+          <button
+            ref={closeButtonRef}
+            type='button'
+            className={s.closeButton}
+            aria-label='Закрыть'
+            onClick={onClose}>
+            <svg
+              width='16'
+              height='16'
+              viewBox='0 0 16 16'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'>
+              <path
+                d='M2 2L14 14M14 2L2 14'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+              />
+            </svg>
+          </button>
+          {title && (
+            <h2 id='modal-title' className={s.title}>
+              {title}
+            </h2>
+          )}
+          {children}
+        </div>
+      </div>,
+      modalRoot
+    );
   }
+);
 
-  const portalContent = (
-    <div className={classNames(s['overlay'])} onClick={handleOverlayClick}>
-      <div className={classNames(s['modal'])} role="dialog" aria-modal="true">
-        <button
-          ref={closeButtonRef}
-          className={classNames(s['closeButton'])}
-          onClick={onClose}
-          aria-label="Закрыть модальное окно"
-          type="button"
-        >
-          ✕
-        </button>
-        {children}
-      </div>
-    </div>
-  );
-
-  const modalRoot = document.getElementById('modal-root');
-
-  if (!modalRoot) {
-    return null;
-  }
-
-  return createPortal(portalContent, modalRoot);
-};
+Modal.displayName = 'Modal';

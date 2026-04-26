@@ -1,17 +1,33 @@
 .button-count {
+  border: 1px solid #cfd8dc;
+	background-color: #fff;
+	height: 40px;
+	border-radius: 100px;
 	display: inline-flex;
 	align-items: center;
 }
 
 .button-count__plus,
 .button-count__minus {
-	width: 40px;
+	border: none;
+	outline: none;
+	background-color: transparent;
 	height: 100%;
+	width: 40px;
+	cursor: pointer;
+	font-size: 24px;
+	padding: 0;
 }
 
 .button-count__num {
-	display: inline-block;
+	border: none;
+	padding: 0;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 24px;
 	width: 30px;
+	display: inline-block;
+	text-align: center;
 }
 
 input[type='number']::-webkit-outer-spin-button,

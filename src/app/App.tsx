@@ -1,5 +1,5 @@
-import { RefExamplesPage } from 'pages/refExamples';
+import { PotralEx } from 'pages/portals';
 
 export function App() {
-  return <RefExamplesPage />; 
+  return <PotralEx />; 
 }
